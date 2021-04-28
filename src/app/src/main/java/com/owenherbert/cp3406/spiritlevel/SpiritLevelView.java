@@ -14,11 +14,7 @@ import androidx.annotation.Nullable;
 public class SpiritLevelView extends View {
 
     private static final int COLOUR_LIME = Color.rgb(50, 205, 128);
-    private static final int COLOUR_TOMATO = Color.rgb(100, 31, 18);
     private static final int COLOUR_GREY = Color.rgb(59, 59,59);
-
-    private static final int LEVEL_BUFFER = 8;
-    private static final int[] levelAngles = { 0, 90, 180 };
 
     Paint paint;
     private float[] orientation;
@@ -48,11 +44,7 @@ public class SpiritLevelView extends View {
         // draw the spirit level
         canvas.rotate(spiritOrientation, getWidth() >> 1, getHeight() >> 1);
 
-        if (isAlmostLevel(spiritOrientation)) {
-            paint.setColor(COLOUR_LIME);
-        } else {
-            paint.setColor(COLOUR_TOMATO);
-        }
+        paint.setColor(COLOUR_LIME);
 
         @SuppressLint("DrawAllocation")
         Rect spiritLevelRectangle = new Rect(-getWidth(), -getHeight(), getWidth() / 2,
@@ -61,22 +53,6 @@ public class SpiritLevelView extends View {
         canvas.drawRect(spiritLevelRectangle, paint);
 
         invalidate();
-    }
-
-    /**
-     * Returns if the spirit orientation is almost level to the phones four sides.
-     *
-     * @param spiritOrientation the spirit orientation angle
-     * @return if the spirit level is almost flat
-     */
-    private static boolean isAlmostLevel(float spiritOrientation) {
-
-        for (int levelAngle : levelAngles) {
-            if (spiritOrientation > levelAngle - LEVEL_BUFFER
-                    && spiritOrientation < levelAngle + LEVEL_BUFFER) return true;
-        }
-
-        return false;
     }
 
     /**
